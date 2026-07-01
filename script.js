@@ -1,53 +1,52 @@
 /* ==========================================
-   NeoTask - Modern Todo List
-   Part 1 : CRUD + Local Storage
+   NeoTask
+   Modern Todo List
+   Part 1
 ========================================== */
 
 const taskInput = document.getElementById("taskInput");
+const prioritySelect = document.getElementById("priority");
 const addTaskBtn = document.getElementById("addTask");
 const taskList = document.getElementById("taskList");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-// ===============================
 // Save Tasks
-// ===============================
 
-function saveTasks() {
+function saveTasks(){
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
 }
 
-// ===============================
 // Render Tasks
-// ===============================
 
-function renderTasks(filter = "all") {
+function renderTasks(filter="all"){
 
-    taskList.innerHTML = "";
+    taskList.innerHTML="";
 
-    const searchValue = document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase();
+    const searchText=document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase();
 
-    let filteredTasks = tasks.filter(task => {
+    let filtered=tasks.filter(task=>{
 
-        const matchesSearch =
-            task.text.toLowerCase().includes(searchValue);
+        const matches=task.text
+        .toLowerCase()
+        .includes(searchText);
 
-        if (filter === "active")
-            return !task.completed && matchesSearch;
+        if(filter==="active")
+            return !task.completed && matches;
 
-        if (filter === "completed")
-            return task.completed && matchesSearch;
+        if(filter==="completed")
+            return task.completed && matches;
 
-        return matchesSearch;
+        return matches;
 
     });
 
-    if(filteredTasks.length===0){
+    if(filtered.length===0){
 
         taskList.innerHTML=`
 
@@ -69,17 +68,17 @@ function renderTasks(filter = "all") {
 
     }
 
-    filteredTasks.forEach(task => {
+    filtered.forEach(task=>{
 
-        const index = tasks.indexOf(task);
+        const index=tasks.indexOf(task);
 
-        const li = document.createElement("li");
+        const li=document.createElement("li");
 
-        li.className = task.completed
-            ? "task completed"
-            : "task";
+        li.className=task.completed
+        ? "task completed"
+        : "task";
 
-        li.innerHTML = `
+        li.innerHTML=`
 
         <div class="left">
 
@@ -94,6 +93,12 @@ function renderTasks(filter = "all") {
 
             </span>
 
+            <span class="priority ${task.priority.toLowerCase()}">
+
+                ${task.priority}
+
+            </span>
+
         </div>
 
         <div class="actions">
@@ -102,7 +107,7 @@ function renderTasks(filter = "all") {
             class="edit"
             onclick="editTask(${index})">
 
-                <i class="fa-solid fa-pen"></i>
+            <i class="fa-solid fa-pen"></i>
 
             </button>
 
@@ -110,7 +115,7 @@ function renderTasks(filter = "all") {
             class="delete"
             onclick="deleteTask(${index})">
 
-                <i class="fa-solid fa-trash"></i>
+            <i class="fa-solid fa-trash"></i>
 
             </button>
 
@@ -126,13 +131,11 @@ function renderTasks(filter = "all") {
 
 }
 
-// ===============================
 // Add Task
-// ===============================
 
 function addTask(){
 
-    const text = taskInput.value.trim();
+    const text=taskInput.value.trim();
 
     if(text===""){
 
@@ -146,11 +149,15 @@ function addTask(){
 
         text:text,
 
+        priority:prioritySelect.value,
+
         completed:false
 
     });
 
     taskInput.value="";
+
+    prioritySelect.value="Medium";
 
     saveTasks();
 
@@ -160,9 +167,7 @@ function addTask(){
 
 }
 
-// ===============================
 // Delete Task
-// ===============================
 
 function deleteTask(index){
 
@@ -176,13 +181,11 @@ function deleteTask(index){
 
 }
 
-// ===============================
 // Edit Task
-// ===============================
 
 function editTask(index){
 
-    const updated = prompt(
+    const updated=prompt(
 
         "Edit Task",
 
@@ -204,13 +207,12 @@ function editTask(index){
 
 }
 
-// ===============================
 // Complete Task
-// ===============================
 
 function toggleTask(index){
 
-    tasks[index].completed=!tasks[index].completed;
+    tasks[index].completed=
+    !tasks[index].completed;
 
     saveTasks();
 
@@ -218,9 +220,7 @@ function toggleTask(index){
 
 }
 
-// ===============================
-// Add Button
-// ===============================
+// Events
 
 addTaskBtn.addEventListener(
 
@@ -229,10 +229,6 @@ addTaskBtn.addEventListener(
     addTask
 
 );
-
-// ===============================
-// Enter Key
-// ===============================
 
 taskInput.addEventListener(
 
@@ -250,28 +246,31 @@ taskInput.addEventListener(
 
 );
 /* ==========================================
-   Part 2 : Search + Filters + Progress
+   Part 2 : Search • Filters • Progress
 ========================================== */
+
+// Search Input
+const searchInput = document.getElementById("searchInput");
+
+// Filter Buttons
+const filterButtons = document.querySelectorAll(".filter");
+
+// Current Filter
+let currentFilter = "all";
 
 // ===============================
 // Search
 // ===============================
 
-const searchInput = document.getElementById("searchInput");
-
 searchInput.addEventListener("input", () => {
 
-    const activeFilter = document.querySelector(".filter.active");
-
-    renderTasks(activeFilter.dataset.filter);
+    renderTasks(currentFilter);
 
 });
 
 // ===============================
-// Filter Buttons
+// Filters
 // ===============================
-
-const filterButtons = document.querySelectorAll(".filter");
 
 filterButtons.forEach(button => {
 
@@ -283,46 +282,51 @@ filterButtons.forEach(button => {
 
         button.classList.add("active");
 
-        renderTasks(button.dataset.filter);
+        currentFilter = button.dataset.filter;
+
+        renderTasks(currentFilter);
 
     });
 
 });
 
 // ===============================
-// Progress & Counters
+// Progress Ring
 // ===============================
 
 function updateProgress(){
 
     const total = tasks.length;
 
-    const completed = tasks.filter(task => task.completed).length;
+    const completed =
+        tasks.filter(task => task.completed).length;
 
     const remaining = total - completed;
 
-    document.getElementById("totalTasks").innerHTML =
+    document.getElementById("progressText").textContent =
+        `${completed} / ${total} Completed`;
+
+    document.getElementById("totalTasks").textContent =
         `Total : ${total}`;
 
-    document.getElementById("remainingTasks").innerHTML =
+    document.getElementById("remainingTasks").textContent =
         `Remaining : ${remaining}`;
-
-    document.getElementById("progressText").innerHTML =
-        `${completed} / ${total} Completed`;
 
     const percent =
         total === 0
         ? 0
         : Math.round((completed / total) * 100);
 
-    document.getElementById("progressPercent").innerHTML =
+    document.getElementById("progressPercent").textContent =
         `${percent}%`;
 
-    document.querySelector(".progress-circle").style.background =
-        `conic-gradient(
-            #6366F1 ${percent * 3.6}deg,
-            #E5E7EB 0deg
-        )`;
+    const circle =
+        document.querySelector(".progress-circle");
+
+    circle.style.background = `conic-gradient(
+        #6366F1 ${percent * 3.6}deg,
+        #E5E7EB 0deg
+    )`;
 
 }
 
@@ -332,9 +336,10 @@ function updateProgress(){
 
 function showToast(message){
 
-    const toast = document.getElementById("toast");
+    const toast =
+        document.getElementById("toast");
 
-    toast.innerHTML = message;
+    toast.textContent = message;
 
     toast.classList.add("show");
 
@@ -347,28 +352,30 @@ function showToast(message){
 }
 
 // ===============================
-// First Load
+// Initial Render
 // ===============================
 
 renderTasks();
 /* ==========================================
-   Part 3 : Theme + Date + Greeting
+   Part 3 : Theme • Keyboard • Final Setup
 ========================================== */
 
 // ===============================
-// Theme Toggle
+// Dark Mode
 // ===============================
 
 const themeBtn = document.getElementById("themeBtn");
 
+// Load saved theme
 if(localStorage.getItem("theme")==="dark"){
 
     document.body.classList.add("dark");
 
-    themeBtn.innerHTML=
-    '<i class="fa-solid fa-sun"></i>';
+    themeBtn.innerHTML='<i class="fa-solid fa-sun"></i>';
 
 }
+
+// Toggle Theme
 
 themeBtn.addEventListener("click",()=>{
 
@@ -378,8 +385,9 @@ themeBtn.addEventListener("click",()=>{
 
         localStorage.setItem("theme","dark");
 
-        themeBtn.innerHTML=
-        '<i class="fa-solid fa-sun"></i>';
+        themeBtn.innerHTML='<i class="fa-solid fa-sun"></i>';
+
+        showToast("Dark Mode Enabled");
 
     }
 
@@ -387,55 +395,82 @@ themeBtn.addEventListener("click",()=>{
 
         localStorage.setItem("theme","light");
 
-        themeBtn.innerHTML=
-        '<i class="fa-solid fa-moon"></i>';
+        themeBtn.innerHTML='<i class="fa-solid fa-moon"></i>';
+
+        showToast("Light Mode Enabled");
 
     }
 
 });
 
 // ===============================
-// Greeting
+// Keyboard Shortcut
+// Ctrl + / Focus Input
 // ===============================
 
-const hour=new Date().getHours();
+document.addEventListener("keydown",(e)=>{
 
-let greeting="Hello";
+    if(e.ctrlKey && e.key==="/"){
 
-if(hour<12){
+        e.preventDefault();
 
-    greeting="Good Morning";
+        taskInput.focus();
 
-}
+    }
 
-else if(hour<17){
-
-    greeting="Good Afternoon";
-
-}
-
-else{
-
-    greeting="Good Evening";
-
-}
-
-document.getElementById("greeting").innerHTML =
-`${greeting} 👋`;
-
+});
 
 // ===============================
 // Auto Focus
 // ===============================
 
-window.onload=()=>{
+window.addEventListener("load",()=>{
 
     taskInput.focus();
 
-};
+    renderTasks(currentFilter);
+
+});
 
 // ===============================
-// Initial Render
+// Clear Input After Add
 // ===============================
 
-renderTasks();
+taskInput.addEventListener("input",()=>{
+
+    taskInput.style.border="none";
+
+});
+
+// ===============================
+// Prevent Empty Spaces
+// ===============================
+
+taskInput.addEventListener("blur",()=>{
+
+    taskInput.value=taskInput.value.trim();
+
+});
+
+// ===============================
+// Save Before Closing
+// ===============================
+
+window.addEventListener("beforeunload",()=>{
+
+    saveTasks();
+
+});
+
+// ===============================
+// Console Message
+// ===============================
+
+console.log("%cNeoTask Loaded Successfully 🚀",
+"color:#6366F1;font-size:16px;font-weight:bold;");
+
+// ===============================
+// First Render
+// ===============================
+
+renderTasks(currentFilter);
