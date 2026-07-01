@@ -420,29 +420,9 @@ else{
 
 }
 
-document.getElementById("greeting").innerHTML=
+document.getElementById("greeting").innerHTML =
+`${greeting} 👋`;
 
-`${greeting}, Divyam 👋`;
-
-// ===============================
-// Current Date
-// ===============================
-
-const today=new Date();
-
-document.getElementById("date").innerHTML=
-
-today.toLocaleDateString("en-US",{
-
-    weekday:"long",
-
-    month:"long",
-
-    day:"numeric",
-
-    year:"numeric"
-
-});
 
 // ===============================
 // Auto Focus
