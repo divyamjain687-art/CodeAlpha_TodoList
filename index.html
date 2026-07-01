@@ -37,11 +37,11 @@
 
             <div class="header-text">
 
-                <h1 id="greeting">
-    Welcome 👋
-</h1>
+                <h1>NeoTask</h1>
 
-                <p id="date"></p>
+                <p>
+                    Organize your work efficiently
+                </p>
 
             </div>
 
@@ -59,7 +59,9 @@
 
             <h2>My Tasks</h2>
 
-            <p>Stay Organized • Stay Productive</p>
+            <p>
+                Stay Organized • Stay Productive
+            </p>
 
         </section>
 
@@ -70,13 +72,37 @@
             <input
                 type="text"
                 id="taskInput"
-                placeholder="What needs to be done today?">
+                placeholder="Enter your task...">
+
+            <!-- Priority -->
+
+            <select id="priority">
+
+                <option value="High">
+
+                    🔴 High
+
+                </option>
+
+                <option value="Medium" selected>
+
+                    🟡 Medium
+
+                </option>
+
+                <option value="Low">
+
+                    🟢 Low
+
+                </option>
+
+            </select>
 
             <button id="addTask">
 
                 <i class="fa-solid fa-plus"></i>
 
-                Add Task
+                Add
 
             </button>
 
@@ -95,23 +121,29 @@
 
         </section>
 
-        <!-- Filters -->
+        <!-- Filter -->
 
         <section class="filters">
 
-            <button class="filter active" data-filter="all">
+            <button
+                class="filter active"
+                data-filter="all">
 
                 All
 
             </button>
 
-            <button class="filter" data-filter="active">
+            <button
+                class="filter"
+                data-filter="active">
 
                 Active
 
             </button>
 
-            <button class="filter" data-filter="completed">
+            <button
+                class="filter"
+                data-filter="completed">
 
                 Completed
 
@@ -125,7 +157,7 @@
 
             <div class="progress-text">
 
-                <h3>Today's Progress</h3>
+                <h3>Progress</h3>
 
                 <p id="progressText">
 
@@ -151,7 +183,7 @@
 
         <ul id="taskList">
 
-            <!-- Tasks appear here -->
+            <!-- JavaScript will add tasks here -->
 
         </ul>
 
