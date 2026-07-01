@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NeoTask | Modern To-Do List</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+
+        <header>
+
+            <div class="header-text">
+
+                <h1 id="greeting">
+                    Hello, Divyam 👋
+                </h1>
+
+                <p id="date"></p>
+
+            </div>
+
+            <button id="themeBtn">
+
+                <i class="fa-solid fa-moon"></i>
+
+            </button>
+
+        </header>
+
+        <!-- Title -->
+
+        <section class="title">
+
+            <h2>My Tasks</h2>
+
+            <p>Stay Organized • Stay Productive</p>
+
+        </section>
+
+        <!-- Add Task -->
+
+        <section class="task-input">
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="What needs to be done today?">
+
+            <button id="addTask">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Task
+
+            </button>
+
+        </section>
+
+        <!-- Search -->
+
+        <section class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search tasks...">
+
+        </section>
+
+        <!-- Filters -->
+
+        <section class="filters">
+
+            <button class="filter active" data-filter="all">
+
+                All
+
+            </button>
+
+            <button class="filter" data-filter="active">
+
+                Active
+
+            </button>
+
+            <button class="filter" data-filter="completed">
+
+                Completed
+
+            </button>
+
+        </section>
+
+        <!-- Progress -->
+
+        <section class="progress-card">
+
+            <div class="progress-text">
+
+                <h3>Today's Progress</h3>
+
+                <p id="progressText">
+
+                    0 / 0 Completed
+
+                </p>
+
+            </div>
+
+            <div class="progress-circle">
+
+                <span id="progressPercent">
+
+                    0%
+
+                </span>
+
+            </div>
+
+        </section>
+
+        <!-- Task List -->
+
+        <ul id="taskList">
+
+            <!-- Tasks appear here -->
+
+        </ul>
+
+        <!-- Footer -->
+
+        <footer>
+
+            <span id="totalTasks">
+
+                Total : 0
+
+            </span>
+
+            <span id="remainingTasks">
+
+                Remaining : 0
+
+            </span>
+
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification -->
+
+    <div id="toast"></div>
+
+    <!-- JavaScript -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
